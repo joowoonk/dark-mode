@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 
 const useLocalStorage = (key, initialValue) => {
   // To retrieve an item from localStorage, call localStorage.getItem('itemName')
