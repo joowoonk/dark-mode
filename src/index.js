@@ -4,27 +4,29 @@ import axios from "axios";
 
 import Charts from "./components/Charts";
 import Navbar from "./components/Navbar";
+import useFetch from "./hooks/useFetch"
 
 import "./styles.scss";
 
-const App = () => {
-  const [coinData, setCoinData] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=true"
-      )
-      .then(res => setCoinData(res.data))
-      .catch(err => console.log(err));
-  }, []);
+function App() {
+  const res = useFetch("https://dog.ceo/api/breeds/image/random", {});
+  console.log("earaewr",res)
+  if (!res.response) {
+    return <div>Loading...</div>
+  }
+  const dogName = res.response.status
+  const imageUrl = res.response.message
   return (
     <div className="App">
-      <Navbar />
-      <Charts coinData={coinData} />
+      <div>
+        <h3>{dogName}</h3>
+        <div>
+          <img src={imageUrl} alt="avatar" />
+        </div>
+      </div>
     </div>
   );
-};
+}
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
